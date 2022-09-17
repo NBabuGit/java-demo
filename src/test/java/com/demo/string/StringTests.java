@@ -57,4 +57,21 @@ public class StringTests {
         Assertions.assertThat(s1).isNotSameAs(s2);
     }
 
+    @Test
+    @DisplayName("String created using constructor are not equal by reference")
+    void strings_not_equal_by_reference() {
+        String s1 = new String("Hello");
+        String s2 = new String("Hello");
+        Assertions.assertThat(s1).isNotSameAs(s2);
+        Assertions.assertThat(s1).isEqualTo(s2);
+    }
+
+    @Test
+    @DisplayName("String created using constructor are  equal by content")
+    void strings_equal_by_content() {
+        String s1 = new String("Hello");
+        String s2 = new String("Hello");
+        Assertions.assertThat(s1).isEqualTo(s2);
+    }
+
 }
