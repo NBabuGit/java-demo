@@ -1,8 +1,10 @@
 package com.demo.streams;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -58,6 +60,41 @@ public class OptionalDemo {
         assertThat(obj1).isEqualTo(obj2)
                 .hasValue("Hello");
         assertThat(obj1).isNotSameAs(obj2);
+    }
+
+    @Test
+    @DisplayName("Optional or usage demo")
+    void optional_or_usage_demo() {
+        Optional<String> optionalStr1 = Optional.empty();
+        Optional<String> optional1 = Optional.of("Hello");
+        assertThat(optionalStr1.or(() ->optional1).get()).isEqualTo("Hello")
+                .hasToString("Hello");
+    }
+
+    @Test
+    @DisplayName("Optional or usage demo- retrieve value from first Optional")
+    void optional_or_usage_demo_2() {
+        Optional<String> optional1 = Optional.of("Hello");
+        Optional<String> optionalStr1 = Optional.empty();
+        assertThat(optional1.or(() ->optionalStr1).get()).isEqualTo("Hello")
+                .hasToString("Hello");
+    }
+
+    @Test
+    @DisplayName("Optional with filter predicate usage")
+    void optional_value_matching_with() {
+        Optional<String> optionalName = Optional.of("Ram");
+        String name = optionalName.filter(name1 -> name1.startsWith("R"))
+                .get();
+        assertThat(name).isEqualTo("Ram");
+    }
+
+    @Test
+    @DisplayName("Optional with filter predicate usage 2")
+    void optional_filter_not_matched_with_condition() {
+        Optional<String> optName = Optional.of("Ram");
+        assertThatThrownBy(() -> optName.filter(x ->  x.contains("Kiran")).get())
+                .isInstanceOf(NoSuchElementException.class);
     }
 
 
