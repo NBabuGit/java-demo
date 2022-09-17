@@ -1,10 +1,8 @@
 package com.demo.string;
 
-import jdk.jfr.Description;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 
 public class StringTests {
@@ -41,4 +39,22 @@ public class StringTests {
         Assertions.assertThat(s1.hashCode()).isEqualTo(s2.hashCode());
 
     }
+
+    @Test
+    @DisplayName("String reference equality of created by literal and String object intern ")
+    void string_reference_equality_scenario_3() {
+        String s1 = "Hello";
+        String s2 = new String("Hello").intern();
+        Assertions.assertThat(s1).isSameAs(s2);
+    }
+
+    @Test
+    @DisplayName("String content equality of created by literal and String object  ")
+    void string_reference_equality_scenario_4() {
+        String s1 = "Hello";
+        String s2 = new String("Hello");
+        Assertions.assertThat(s1).isEqualTo(s2);
+        Assertions.assertThat(s1).isNotSameAs(s2);
+    }
+
 }
