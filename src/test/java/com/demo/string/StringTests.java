@@ -74,4 +74,15 @@ public class StringTests {
         Assertions.assertThat(s1).isEqualTo(s2);
     }
 
+    @Test
+    @DisplayName("String created using constructor are  equal by content")
+    void check_hashcode() {
+        String s1 = new String("Hello");
+        String s2 = new String("Hello");
+        String s3 = s1.substring(2);
+        System.out.println("s1 hashcode:"+s1.hashCode());
+        System.out.println("s2 hashcode:"+s2.hashCode());
+        System.out.println("s3 hashcode:"+s3.hashCode());
+    }
+
 }
