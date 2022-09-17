@@ -1,9 +1,11 @@
 package com.demo.streams;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -66,6 +68,19 @@ public class StreamsDemo1 {
     }
 
     @Test
+    void stream_consumed_reuse_without_IllegalStateException() {
+        Supplier<Stream<Integer>> supplierStream = () -> Stream.of(4,5,7,9,1,3);
+        List<Integer> evenList = supplierStream.get()
+                .filter(x -> x%2==0)
+                .collect(toList());
+        System.out.println("evenList:"+evenList);
+        List<Integer> oddList = supplierStream.get()
+                .filter(x -> x%2!=0)
+                .collect(toList());
+        System.out.println("oddList:"+oddList);
+    }
+
+    @Test
     void find_odd_even_values() {
         List<Integer> list = Arrays.asList(4, 5, 7, 9, 1, 3);
         List<Integer> evenList = list.stream()
@@ -75,5 +90,13 @@ public class StreamsDemo1 {
         List<Integer> oddList  =list.stream().filter(x -> x%2!=0)
                 .collect(toList());
         System.out.println("oddList:"+oddList);
+    }
+
+    @Test
+    @DisplayName("streams for each break simulation..added in Java9")
+    void streams_for_each_break_scenario() {
+        Stream<String> names = Stream.of("abc", "def", "aklk", "abcdef", "kfg");
+        names.takeWhile(name -> (name.length()%2) !=0)
+                .forEach(System.out::println);
     }
 }

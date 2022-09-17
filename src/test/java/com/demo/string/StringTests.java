@@ -85,4 +85,17 @@ public class StringTests {
         System.out.println("s3 hashcode:"+s3.hashCode());
     }
 
+    @Test
+    /**
+     * added in Java version 15
+     */
+    void multiline_string() {
+        String ms = """
+                this is
+                sample multi line string
+                """;
+        System.out.println(ms);
+
+    }
+
 }
